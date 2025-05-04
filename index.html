@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación 41 Aniversario - Centro Ancianos Hatillo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales y fuente */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDE68A; /* Tono amarillo/naranja claro de la imagen */
+        }
+
+        /* Animación sutil para los globos */
+        @keyframes float-gentle {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+        .balloon {
+            animation: float-gentle 4s ease-in-out infinite;
+            display: inline-block;
+            font-size: 2rem;
+            margin: 0 0.2rem;
+            opacity: 0.9;
+        }
+
+        /* Estilos para el mensaje de confirmación */
+        #confirmationMessage {
+            display: none;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            background-color: #A7F3D0; /* Verde más claro */
+            color: #047857; /* Verde oscuro */
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #6EE7B7;
+        }
+        /* Estilo para mensaje de error */
+        #confirmationMessage.error {
+             background-color: #FECACA; /* Rojo más claro */
+             color: #B91C1C; /* Rojo oscuro */
+             border-color: #F87171; /* Borde rojo */
+        }
+
+        /* Contenedor principal con fondo crema */
+        .main-container {
+            background-color: #FFFBEB; /* Crema muy pálido */
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 25px rgba(120, 53, 15, 0.2); /* Sombra marrón más intensa */
+            border: 1px solid #FCD34D; /* Borde amarillo/dorado */
+            width: 100%; /* Asegura que ocupe el ancho disponible */
+            max-width: 500px; /* Limita el ancho máximo en pantallas grandes */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Separador (tono marrón más oscuro) */
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #B45309, transparent);
+            border: 0;
+            margin: 1.5rem 0;
+        }
+
+        /* Estilo para resaltar la hora */
+        .highlight-time {
+            background-color: #FDBA74;
+            color: #7C2D12;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+
+        /* Estilos para el visor de imagen (modal) */
+        #imageModal {
+            display: none; /* Oculto por defecto */
+            position: fixed; /* Posición fija para cubrir toda la pantalla */
+            z-index: 1000; /* Asegura que esté por encima de todo */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Permite scroll si la imagen es muy grande */
+            background-color: rgba(0, 0, 0, 0.85); /* Fondo negro semitransparente */
+            cursor: pointer; /* Indica que se puede cerrar haciendo clic */
+            padding: 20px; /* Espacio alrededor */
+            box-sizing: border-box;
+        }
+        #modalImage {
+            display: block;
+            margin: auto; /* Centra la imagen */
+            max-width: 95%; /* Limita el ancho máximo */
+            max-height: 95%; /* Limita la altura máxima */
+            width: auto; /* Mantiene la proporción */
+            height: auto; /* Mantiene la proporción */
+            cursor: default; /* Cursor normal sobre la imagen */
+        }
+        #closeModal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1001; /* Encima de la imagen */
+        }
+        #closeModal:hover,
+        #closeModal:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        /* Colores personalizados */
+        .text-title-orange { color: #C2410C; }
+        .text-title-brown { color: #854D0E; }
+        .text-content-brown { color: #713F12; }
+        .text-italic-gray { color: #57534E; }
+        .bg-button-orange { background-color: #D97706; }
+        .hover\:bg-button-orange-dark { background-color: #B45309; }
+        .focus\:ring-button-orange { --tw-ring-color: #FDBA74; }
+        .text-radio-orange { color: #C2410C; }
+        .focus\:ring-radio-orange { --tw-ring-color: #FDBA74; }
+        .border-input-focus { border-color: #FDBA74; }
+
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="main-container p-6 sm:p-10 text-center">
+
+        <div class="mb-8">
+            <span class="balloon" style="animation-delay: 0s;">🎈</span>
+            <span class="balloon" style="animation-delay: 0.5s;">🎉</span>
+            <span class="balloon" style="animation-delay: 1s;"><span style="filter: hue-rotate(180deg);">🎈</span></span>
+            <h1 class="text-3xl sm:text-4xl font-bold text-title-brown mt-4">
+                Venga a celebrar con nosotros
+            </h1>
+        </div>
+
+        <img id="invitationImage"
+             src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimEkZnALwUIhRMpd55RxVU6TS0ywex8h9XT5nj8UJPu77t4BaB5_Jbv0l16RDJ7JpA3t-FkNYtUxro18-V1bjwB4R6VnMlwpVIAYVPuFIoZ6hgSY4C3rwVDX_sSCYA-p_03rhUTMP3vO6FFeLueFFhPvz-xOdhZTlKscjI1TEF3PtTiAfAW4ce0HM80p8/w391-h588/ChatGPT%20Image%204%20may%202025,%2005_19_05%20p.m..png"
+             alt="Invitación al 41 Aniversario del Centro Ancianos Hatillo"
+             class="w-full h-auto object-contain rounded-lg mb-8 max-h-[60vh] sm:max-h-96 shadow-sm cursor-pointer transition transform hover:scale-105"
+             onerror="this.src='https://placehold.co/600x400/FDE68A/713F12?text=Imagen+no+disponible'; this.alt='[Error al cargar la imagen de invitación]'; this.classList.add('h-48', 'object-cover');">
+
+        <div class="mb-8 text-content-brown">
+            <p class="text-5xl sm:text-6xl font-bold text-title-orange mb-3" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">41°</p>
+            <p class="text-xl sm:text-2xl mb-5 font-semibold text-title-brown">Aniversario de Fundación<br>Centro Ancianos Hatillo San Sebastián</p>
+            <p class="text-md sm:text-lg mt-4"><strong class="font-semibold text-gray-800">Fecha:</strong> Viernes, 30 de Mayo</p> <p class="text-md sm:text-lg"><strong class="font-semibold text-gray-800">Hora:</strong> <span class="highlight-time">10:00 AM</span></p>
+            <p class="text-md sm:text-lg"><strong class="font-semibold text-gray-800">Lugar:</strong> Centro Ancianos Hatillo San Sebastián</p>
+            <p class="text-md sm:text-lg mt-4 italic text-italic-gray">Nos honraría contar con su presencia.</p>
+        </div>
+
+        <hr class="divider">
+
+        <h2 class="text-xl sm:text-2xl font-semibold text-title-brown mb-6">Confirme su Asistencia</h2>
+        <form id="confirmationForm" class="space-y-5">
+            <div>
+                <label for="nombre" class="block text-left text-sm font-medium text-gray-700 mb-1">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-radio-orange border-input-focus transition duration-150 placeholder-gray-400 bg-white"
+                       placeholder="Escriba su nombre aquí">
+            </div>
+
+            <fieldset>
+                <legend class="block text-left text-sm font-medium text-gray-700 mb-2">¿Podrá acompañarnos?</legend>
+                <div class="flex items-center justify-start space-x-6">
+                    <div class="flex items-center">
+                        <input id="asiste_si" name="asistencia" type="radio" value="si" required
+                               class="h-4 w-4 text-radio-orange border-gray-400 focus:ring-radio-orange">
+                        <label for="asiste_si" class="ml-2 block text-sm text-gray-800">Sí, asistiré</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="asiste_no" name="asistencia" type="radio" value="no" required
+                               class="h-4 w-4 text-gray-500 border-gray-400 focus:ring-gray-500">
+                        <label for="asiste_no" class="ml-2 block text-sm text-gray-800">No podré asistir</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <button type="submit"
+                    class="w-full bg-button-orange hover:bg-button-orange-dark text-white font-bold py-2.5 px-4 rounded-md shadow hover:shadow-md transition duration-300 ease-in-out mt-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-button-orange">
+                Enviar Confirmación
+            </button>
+        </form>
+
+        <div id="confirmationMessage">
+            </div>
+
+    </div>
+
+    <div id="imageModal">
+        <span id="closeModal" title="Cerrar">&times;</span>
+        <img id="modalImage" alt="Imagen de la invitación en pantalla completa">
+    </div>
+
+    <script>
+        // --- Script del formulario (sin cambios) ---
+        const form = document.getElementById('confirmationForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nombreInput = document.getElementById('nombre');
+            const asistenciaInput = document.querySelector('input[name="asistencia"]:checked');
+            confirmationMessage.classList.remove('error');
+            confirmationMessage.style.backgroundColor = '#A7F3D0';
+            confirmationMessage.style.color = '#047857';
+            confirmationMessage.style.borderColor = '#6EE7B7';
+
+            if (nombreInput.value.trim() && asistenciaInput) {
+                form.style.display = 'none';
+                const nombreConfirmado = nombreInput.value.trim();
+                const asistira = asistenciaInput.value === 'si';
+                if (asistira) {
+                    confirmationMessage.innerHTML = `¡Muchas gracias por confirmar, ${nombreConfirmado}! <br> Será un placer contar con su presencia. 🎉`;
+                } else {
+                    confirmationMessage.innerHTML = `Gracias por informarnos, ${nombreConfirmado}. <br> Lamentamos que no pueda acompañarnos en esta ocasión.`;
+                }
+                confirmationMessage.style.display = 'block';
+            } else {
+                 confirmationMessage.innerHTML = 'Por favor, complete su nombre y seleccione una opción.';
+                 confirmationMessage.classList.add('error');
+                 confirmationMessage.style.display = 'block';
+                 console.error("Formulario incompleto.");
+            }
+        });
+
+        // --- Script para el visor de imagen (modal) ---
+        const modal = document.getElementById('imageModal');
+        const img = document.getElementById('invitationImage');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.getElementById('closeModal');
+
+        // Añadir evento de clic a la imagen de la invitación
+        img.onclick = function(){
+            modal.style.display = "block"; // Muestra el modal
+            modalImg.src = this.src; // Pone la imagen clickeada en el modal
+            modalImg.alt = this.alt; // Copia el texto alternativo
+        }
+
+        // Añadir evento de clic al botón de cerrar (X)
+        closeModal.onclick = function() {
+            modal.style.display = "none"; // Oculta el modal
+        }
+
+        // Añadir evento de clic al fondo del modal para cerrar también
+        modal.onclick = function(event) {
+            // Si se hace clic directamente en el fondo (no en la imagen o el botón de cerrar)
+            if (event.target === modal) {
+                 modal.style.display = "none"; // Oculta el modal
+            }
+        }
+
+    </script>
+
+</body>
+</html>
