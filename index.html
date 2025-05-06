@@ -10,15 +10,18 @@
     <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimEkZnALwUIhRMpd55RxVU6TS0ywex8h9XT5nj8UJPu77t4BaB5_Jbv0l16RDJ7JpA3t-FkNYtUxro18-V1bjwB4R6VnMlwpVIAYVPuFIoZ6hgSY4C3rwVDX_sSCYA-p_03rhUTMP3vO6FFeLueFFhPvz-xOdhZTlKscjI1TEF3PtTiAfAW4ce0HM80p8/w391-h588/ChatGPT%20Image%204%20may%202025,%2005_19_05%20p.m..png">
     <meta property="og:url" content="URL_DE_TU_PAGINA_WEB">
     <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
         /* Estilos generales y fuente */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FDE68A; /* Tono amarillo/naranja claro de la imagen */
+            background-color: #FDE68A; /* Tono amarillo/naranja claro */
         }
 
         /* Animación sutil para los globos */
@@ -30,26 +33,33 @@
         .balloon {
             animation: float-gentle 4s ease-in-out infinite;
             display: inline-block;
-            font-size: 2rem;
+            font-size: 2rem; /* Tamaño de los globos */
             margin: 0 0.2rem;
             opacity: 0.9;
         }
 
         /* Estilos para el mensaje de confirmación */
         #confirmationMessage {
-            display: none;
+            display: none; /* Oculto por defecto */
             border-radius: 0.5rem;
             padding: 1rem;
             margin-top: 1.5rem;
-            background-color: #A7F3D0; /* Verde más claro */
-            color: #047857; /* Verde oscuro */
+            background-color: #A7F3D0; /* Verde claro (éxito) */
+            color: #047857; /* Verde oscuro (éxito) */
             text-align: center;
             font-weight: 600;
             border: 1px solid #6EE7B7;
+            transition: opacity 0.3s ease-in-out; /* Transición suave */
         }
-        /* Estilo para mensaje de error */
+        /* Estilo para mensaje de "No asistiré" (un poco diferente) */
+        #confirmationMessage.info {
+             background-color: #FEF3C7; /* Amarillo muy claro */
+             color: #92400E; /* Marrón/Naranja oscuro */
+             border-color: #FCD34D; /* Borde amarillo */
+        }
+        /* Estilo para mensaje de error (si fuera necesario) */
         #confirmationMessage.error {
-             background-color: #FECACA; /* Rojo más claro */
+             background-color: #FECACA; /* Rojo claro */
              color: #B91C1C; /* Rojo oscuro */
              border-color: #F87171; /* Borde rojo */
         }
@@ -60,8 +70,8 @@
             border-radius: 0.75rem;
             box-shadow: 0 8px 25px rgba(120, 53, 15, 0.2); /* Sombra marrón más intensa */
             border: 1px solid #FCD34D; /* Borde amarillo/dorado */
-            width: 100%; /* Asegura que ocupe el ancho disponible */
-            max-width: 500px; /* Limita el ancho máximo en pantallas grandes */
+            width: 100%; /* Ocupa el ancho disponible */
+            max-width: 500px; /* Limita el ancho máximo */
             margin-left: auto;
             margin-right: auto;
         }
@@ -76,8 +86,8 @@
 
         /* Estilo para resaltar la hora */
         .highlight-time {
-            background-color: #FDBA74;
-            color: #7C2D12;
+            background-color: #FDBA74; /* Naranja claro */
+            color: #7C2D12; /* Marrón oscuro */
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
             font-weight: 600;
@@ -86,26 +96,29 @@
         /* Estilos para el visor de imagen (modal) */
         #imageModal {
             display: none; /* Oculto por defecto */
-            position: fixed; /* Posición fija para cubrir toda la pantalla */
-            z-index: 1000; /* Asegura que esté por encima de todo */
+            position: fixed; /* Posición fija */
+            z-index: 1000; /* Por encima de todo */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto; /* Permite scroll si la imagen es muy grande */
+            overflow: auto; /* Scroll si la imagen es grande */
             background-color: rgba(0, 0, 0, 0.85); /* Fondo negro semitransparente */
             cursor: pointer; /* Indica que se puede cerrar haciendo clic */
             padding: 20px; /* Espacio alrededor */
             box-sizing: border-box;
+            align-items: center; /* Centra verticalmente */
+            justify-content: center; /* Centra horizontalmente */
         }
         #modalImage {
             display: block;
             margin: auto; /* Centra la imagen */
-            max-width: 95%; /* Limita el ancho máximo */
-            max-height: 95%; /* Limita la altura máxima */
-            width: auto; /* Mantiene la proporción */
-            height: auto; /* Mantiene la proporción */
+            max-width: 95%; /* Ancho máximo */
+            max-height: 95vh; /* Altura máxima relativa al viewport */
+            width: auto; /* Mantiene proporción */
+            height: auto; /* Mantiene proporción */
             cursor: default; /* Cursor normal sobre la imagen */
+            border-radius: 8px; /* Bordes redondeados */
         }
         #closeModal {
             position: absolute;
@@ -117,6 +130,7 @@
             transition: 0.3s;
             cursor: pointer;
             z-index: 1001; /* Encima de la imagen */
+            line-height: 1; /* Ajuste para mejor posicionamiento */
         }
         #closeModal:hover,
         #closeModal:focus {
@@ -124,21 +138,23 @@
             text-decoration: none;
         }
 
-        /* Colores personalizados */
-        .text-title-orange { color: #C2410C; }
-        .text-title-brown { color: #854D0E; }
-        .text-content-brown { color: #713F12; }
-        .text-italic-gray { color: #57534E; }
-        .bg-button-orange { background-color: #D97706; }
-        .hover\:bg-button-orange-dark { background-color: #B45309; }
-        .focus\:ring-button-orange { --tw-ring-color: #FDBA74; }
-        .text-radio-orange { color: #C2410C; }
-        .focus\:ring-radio-orange { --tw-ring-color: #FDBA74; }
-        .border-input-focus { border-color: #FDBA74; }
+        /* Clases de utilidad de Tailwind (personalizadas para claridad) */
+        .text-title-orange { color: #C2410C; } /* Naranja oscuro para títulos */
+        .text-title-brown { color: #854D0E; } /* Marrón para títulos */
+        .text-content-brown { color: #713F12; } /* Marrón para texto */
+        .text-italic-gray { color: #57534E; } /* Gris oscuro para texto cursiva */
+        .bg-button-orange { background-color: #D97706; } /* Naranja para botón */
+        .hover\:bg-button-orange-dark:hover { background-color: #B45309; } /* Naranja más oscuro al pasar el ratón */
+        .focus\:ring-button-orange:focus { --tw-ring-color: #FDBA74; box-shadow: 0 0 0 3px var(--tw-ring-color); } /* Anillo de foco naranja */
+        .text-radio-orange { color: #C2410C; } /* Color del radio button seleccionado */
+        .focus\:ring-radio-orange:focus { --tw-ring-color: #FDBA74; } /* Anillo de foco para radio */
+        .border-input-focus:focus { border-color: #FDBA74; } /* Borde naranja al enfocar input */
+        .border-textarea-focus:focus { border-color: #FDBA74; } /* Borde naranja al enfocar textarea */
 
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
+
     <div class="main-container p-6 sm:p-10 text-center">
 
         <div class="mb-8">
@@ -153,17 +169,18 @@
         <img id="invitationImage"
              src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimEkZnALwUIhRMpd55RxVU6TS0ywex8h9XT5nj8UJPu77t4BaB5_Jbv0l16RDJ7JpA3t-FkNYtUxro18-V1bjwB4R6VnMlwpVIAYVPuFIoZ6hgSY4C3rwVDX_sSCYA-p_03rhUTMP3vO6FFeLueFFhPvz-xOdhZTlKscjI1TEF3PtTiAfAW4ce0HM80p8/w391-h588/ChatGPT%20Image%204%20may%202025,%2005_19_05%20p.m..png"
              alt="Invitación al 41 Aniversario del Centro Ancianos Hatillo"
-             class="w-full h-auto object-contain rounded-lg mb-8 max-h-[60vh] sm:max-h-96 shadow-sm cursor-pointer transition transform hover:scale-105"
-             onerror="this.src='https://placehold.co/600x400/FDE68A/713F12?text=Imagen+no+disponible'; this.alt='[Error al cargar la imagen de invitación]'; this.classList.add('h-48', 'object-cover');">
-
-        <div class="mb-8 text-content-brown">
-            <p class="text-xl sm:text-2xl mb-5 font-semibold text-title-brown leading-relaxed"> Tenemos el agrado de invitarle a celebrar nuestro<br>
-                <span class="text-4xl sm:text-5xl font-bold text-title-orange" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">41° Aniversario de Fundación</span><br> del Centro Ancianos Hatillo San Sebastián
+             class="w-full h-auto object-contain rounded-lg mb-8 max-h-[60vh] sm:max-h-96 shadow-sm cursor-pointer transition transform hover:scale-105 duration-300 ease-in-out"
+             onerror="this.onerror=null; this.src='https://placehold.co/600x400/FDE68A/713F12?text=Imagen+no+disponible'; this.alt='[Error al cargar la imagen de invitación]'; this.classList.add('h-48', 'object-cover');"> <div class="mb-8 text-content-brown">
+            <p class="text-xl sm:text-2xl mb-5 font-semibold text-title-brown leading-relaxed">
+                Tenemos el agrado de invitarle a celebrar nuestro<br>
+                <span class="text-4xl sm:text-5xl font-bold text-title-orange" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">41° Aniversario de Fundación</span><br>
+                del Centro Ancianos Hatillo San Sebastián
             </p>
             <p class="text-md sm:text-lg mt-6"><strong class="font-semibold text-gray-800">Fecha:</strong> Viernes, 30 de Mayo</p>
             <p class="text-md sm:text-lg"><strong class="font-semibold text-gray-800">Hora:</strong> <span class="highlight-time">10:00 AM</span></p>
             <p class="text-md sm:text-lg"><strong class="font-semibold text-gray-800">Lugar:</strong> Centro Ancianos Hatillo San Sebastián</p>
-            <p class="text-md sm:text-lg mt-6 italic text-italic-gray">Nos honraría contar con su valiosa presencia.</p> </div>
+            <p class="text-md sm:text-lg mt-6 italic text-italic-gray">Nos honraría contar con su valiosa presencia.</p>
+        </div>
 
         <hr class="divider">
 
@@ -172,7 +189,7 @@
             <div>
                 <label for="nombre" class="block text-left text-sm font-medium text-gray-700 mb-1">Nombre Completo:</label>
                 <input type="text" id="nombre" name="nombre" required
-                       class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-radio-orange border-input-focus transition duration-150 placeholder-gray-400 bg-white"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-radio-orange border-input-focus transition duration-150 placeholder-gray-400 bg-white"
                        placeholder="Escriba su nombre aquí">
             </div>
 
@@ -181,90 +198,134 @@
                 <div class="flex items-center justify-start space-x-6">
                     <div class="flex items-center">
                         <input id="asiste_si" name="asistencia" type="radio" value="si" required
-                               class="h-4 w-4 text-radio-orange border-gray-400 focus:ring-radio-orange">
-                        <label for="asiste_si" class="ml-2 block text-sm text-gray-800">Sí, asistiré</label>
+                               class="h-4 w-4 text-radio-orange border-gray-400 focus:ring-radio-orange focus:ring-offset-0">
+                        <label for="asiste_si" class="ml-2 block text-sm text-gray-800 cursor-pointer">Sí, asistiré</label>
                     </div>
                     <div class="flex items-center">
                         <input id="asiste_no" name="asistencia" type="radio" value="no" required
-                               class="h-4 w-4 text-gray-500 border-gray-400 focus:ring-gray-500">
-                        <label for="asiste_no" class="ml-2 block text-sm text-gray-800">No podré asistir</label>
+                               class="h-4 w-4 text-gray-500 border-gray-400 focus:ring-gray-500 focus:ring-offset-0">
+                        <label for="asiste_no" class="ml-2 block text-sm text-gray-800 cursor-pointer">No podré asistir</label>
                     </div>
                 </div>
             </fieldset>
 
+            <div>
+                <label for="comentario" class="block text-left text-sm font-medium text-gray-700 mb-1">Comentario (Opcional):</label>
+                <textarea id="comentario" name="comentario" rows="3"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-radio-orange border-textarea-focus transition duration-150 placeholder-gray-400 bg-white"
+                          placeholder="Si desea, deje un comentario aquí..."></textarea>
+            </div>
+
             <button type="submit"
-                    class="w-full bg-button-orange hover:bg-button-orange-dark text-white font-bold py-2.5 px-4 rounded-md shadow hover:shadow-md transition duration-300 ease-in-out mt-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-button-orange">
-                Enviar Confirmación
+                    class="w-full bg-button-orange hover:bg-button-orange-dark text-white font-bold py-2.5 px-4 rounded-md shadow hover:shadow-md transition duration-300 ease-in-out mt-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-button-orange">
+                Enviar Confirmación por WhatsApp
             </button>
         </form>
 
         <div id="confirmationMessage">
             </div>
 
-    </div>
-
-    <div id="imageModal">
-        <span id="closeModal" title="Cerrar">&times;</span>
-        <img id="modalImage" alt="Imagen de la invitación en pantalla completa">
-    </div>
+    </div> <div id="imageModal" onclick="closeImageModal()"> <span id="closeModal" title="Cerrar" onclick="closeImageModal(event)">&times;</span>
+        <img id="modalImage" alt="Imagen de la invitación en pantalla completa" onclick="event.stopPropagation()"> </div>
 
     <script>
-        // --- Script del formulario (sin cambios) ---
+        // --- Selección de Elementos del DOM ---
         const form = document.getElementById('confirmationForm');
-        const confirmationMessage = document.getElementById('confirmationMessage');
+        const confirmationMessageDiv = document.getElementById('confirmationMessage');
+        const nombreInput = document.getElementById('nombre');
+        const comentarioInput = document.getElementById('comentario'); // NUEVO: Referencia al textarea
+        const invitationImage = document.getElementById('invitationImage');
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModalButton = document.getElementById('closeModal');
 
+        // --- Lógica del Formulario de Confirmación (MODIFICADA) ---
         form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const nombreInput = document.getElementById('nombre');
-            const asistenciaInput = document.querySelector('input[name="asistencia"]:checked');
-            confirmationMessage.classList.remove('error');
-            confirmationMessage.style.backgroundColor = '#A7F3D0';
-            confirmationMessage.style.color = '#047857';
-            confirmationMessage.style.borderColor = '#6EE7B7';
+            event.preventDefault(); // Previene el envío tradicional del formulario
 
-            if (nombreInput.value.trim() && asistenciaInput) {
-                form.style.display = 'none';
-                const nombreConfirmado = nombreInput.value.trim();
-                const asistira = asistenciaInput.value === 'si';
-                if (asistira) {
-                    confirmationMessage.innerHTML = `¡Muchas gracias por confirmar, ${nombreConfirmado}! <br> Será un placer contar con su presencia. 🎉`;
-                } else {
-                    confirmationMessage.innerHTML = `Gracias por informarnos, ${nombreConfirmado}. <br> Lamentamos que no pueda acompañarnos en esta ocasión.`;
-                }
-                confirmationMessage.style.display = 'block';
-            } else {
-                 confirmationMessage.innerHTML = 'Por favor, complete su nombre y seleccione una opción.';
-                 confirmationMessage.classList.add('error');
-                 confirmationMessage.style.display = 'block';
-                 console.error("Formulario incompleto.");
+            // Obtiene los datos del formulario
+            const formData = new FormData(form);
+            const nombre = formData.get('nombre').trim();
+            const asistencia = formData.get('asistencia'); // 'si' o 'no'
+            const comentario = formData.get('comentario').trim(); // NUEVO: Obtiene el comentario
+
+            // Valida que el nombre no esté vacío (aunque 'required' ayuda, una doble verificación es buena)
+            if (!nombre) {
+                alert('Por favor, ingrese su nombre.');
+                nombreInput.focus();
+                return;
             }
+
+            // Formatea el mensaje para WhatsApp
+            let asistenciaTexto = asistencia === 'si' ? 'Sí asistiré' : 'No podré asistir';
+            let mensajeWhatsApp = `*Confirmación Aniversario Centro Ancianos*\n\n`;
+            mensajeWhatsApp += `*Nombre:* ${nombre}\n`;
+            mensajeWhatsApp += `*Asistencia:* ${asistenciaTexto}\n`;
+            if (comentario) { // Solo añade el comentario si existe
+                mensajeWhatsApp += `*Comentario:* ${comentario}\n`;
+            }
+
+            // Codifica el mensaje para la URL de WhatsApp
+            const mensajeCodificado = encodeURIComponent(mensajeWhatsApp);
+
+            // Número de teléfono (sin el '+' y sin espacios)
+            const numeroTelefono = '50661935408'; // Reemplaza con tu número si es diferente
+
+            // Construye la URL de WhatsApp
+            const whatsappURL = `https://wa.me/${numeroTelefono}?text=${mensajeCodificado}`;
+
+            // Intenta abrir WhatsApp en una nueva pestaña
+            // Nota: El navegador puede bloquear pop-ups si no es una acción directa del usuario.
+            // El 'submit' del formulario generalmente se considera una acción directa.
+            window.open(whatsappURL, '_blank');
+
+            // Muestra un mensaje de confirmación en la página
+            let message = '';
+            confirmationMessageDiv.classList.remove('info', 'error'); // Limpia clases previas
+
+            if (asistencia === 'si') {
+                message = `¡Gracias, ${nombre}! Se abrirá WhatsApp para que envíes tu confirmación. 😊`;
+                confirmationMessageDiv.classList.remove('info');
+            } else {
+                message = `Gracias por informarnos, ${nombre}. Se abrirá WhatsApp para que envíes tu respuesta. 😔`;
+                confirmationMessageDiv.classList.add('info');
+            }
+            message += ' Si no se abre automáticamente, por favor verifica que no tengas bloqueadas las ventanas emergentes.';
+
+            confirmationMessageDiv.textContent = message;
+            confirmationMessageDiv.style.display = 'block';
+            confirmationMessageDiv.style.opacity = 1;
+
+            // Desplaza la vista al mensaje de confirmación
+            confirmationMessageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Opcional: Limpiar el formulario después de intentar enviar
+            // form.reset();
         });
 
-        // --- Script para el visor de imagen (modal) ---
-        const modal = document.getElementById('imageModal');
-        const img = document.getElementById('invitationImage');
-        const modalImg = document.getElementById('modalImage');
-        const closeModal = document.getElementById('closeModal');
+        // --- Lógica del Visor de Imagen (Modal - sin cambios) ---
+        invitationImage.addEventListener('click', function() {
+            modalImage.src = this.src;
+            modalImage.alt = this.alt;
+            imageModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
 
-        // Añadir evento de clic a la imagen de la invitación
-        img.onclick = function(){
-            modal.style.display = "block"; // Muestra el modal
-            modalImg.src = this.src; // Pone la imagen clickeada en el modal
-            modalImg.alt = this.alt; // Copia el texto alternativo
-        }
-
-        // Añadir evento de clic al botón de cerrar (X)
-        closeModal.onclick = function() {
-            modal.style.display = "none"; // Oculta el modal
-        }
-
-        // Añadir evento de clic al fondo del modal para cerrar también
-        modal.onclick = function(event) {
-            // Si se hace clic directamente en el fondo (no en la imagen o el botón de cerrar)
-            if (event.target === modal) {
-                 modal.style.display = "none"; // Oculta el modal
+        function closeImageModal(event) {
+            if (!event || event.target === imageModal || event.target === closeModalButton) {
+                imageModal.style.display = 'none';
+                document.body.style.overflow = '';
+                if (event && event.target === closeModalButton) {
+                    event.stopPropagation();
+                }
             }
         }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && imageModal.style.display === 'flex') {
+                closeImageModal();
+            }
+        });
 
     </script>
 
